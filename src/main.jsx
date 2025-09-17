@@ -1,24 +1,32 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
+import { getTheme } from './theme'
 import './index.css'
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: { main: '#1e88e5' },
-    background: { default: '#fafafa' }
+
+function Main() {
+  const [mode, setMode] = useState('light')
+  const theme = useMemo(() => getTheme(mode), [mode])
+
+  function toggleMode() {
+    setMode((prev) => (prev === 'light' ? 'dark' : 'light'))
   }
-})
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App toggleMode={toggleMode} mode={mode} />
+    </ThemeProvider>
+  )
+}
+
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
+      <Main />
     </BrowserRouter>
   </React.StrictMode>
 )
