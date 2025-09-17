@@ -32,7 +32,7 @@ export default function MovieDetail() {
       sx={{
         position: 'relative',
         minHeight: '100vh',
-        pb: 6, // espacio extra al final
+        pb: 6,
         background: `linear-gradient(rgba(20,20,20,0.95), rgba(20,20,20,0.95)), url(${movie.posterUrl}) center/cover no-repeat`,
       }}
     >
@@ -87,10 +87,17 @@ export default function MovieDetail() {
               </Typography>
             </Typography>
 
-            {/* Géneros */}
+            {/* Géneros animados */}
             <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {movie.genres.map((g) => (
-                <Chip key={g} label={g} color="secondary" />
+              {movie.genres.map((g, i) => (
+                <motion.div
+                  key={g}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                >
+                  <Chip key={g} label={g} color="secondary" />
+                </motion.div>
               ))}
             </Box>
 
@@ -99,29 +106,41 @@ export default function MovieDetail() {
               {movie.overview}
             </Typography>
 
-            {/* Rating */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1 }}>
-              <Rating value={movie.rating / 2} precision={0.1} readOnly sx={{ color: '#fbc02d' }} />
-              <Typography sx={{ fontWeight: 700, color: '#fbc02d' }}>
-                {movie.rating.toFixed(1)} / 10
-              </Typography>
-            </Box>
+            {/* Rating animado */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1 }}>
+                <Rating value={movie.rating / 2} precision={0.1} readOnly sx={{ color: '#fbc02d' }} />
+                <Typography sx={{ fontWeight: 700, color: '#fbc02d' }}>
+                  {movie.rating.toFixed(1)} / 10
+                </Typography>
+              </Box>
+            </motion.div>
 
-            {/* Detalles */}
-            <Box sx={{ mt: 4, color: 'rgba(255,255,255,0.85)' }}>
-              <Typography variant="subtitle2" sx={{ opacity: 0.9, mb: 1 }}>
-                Detalles
-              </Typography>
-              <Typography variant="body2" sx={{ mb: 0.5 }}>
-                <strong>Año:</strong> {movie.year}
-              </Typography>
-              <Typography variant="body2" sx={{ mb: 0.5 }}>
-                <strong>Géneros:</strong> {movie.genres.join(', ')}
-              </Typography>
-              <Typography variant="body2">
-                <strong>Rating:</strong> {movie.rating.toFixed(1)} / 10
-              </Typography>
-            </Box>
+            {/* Detalles extra animados */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Box sx={{ mt: 4, color: 'rgba(255,255,255,0.85)' }}>
+                <Typography variant="subtitle2" sx={{ opacity: 0.9, mb: 1 }}>
+                  Detalles
+                </Typography>
+                <Typography variant="body2" sx={{ mb: 0.5 }}>
+                  <strong>Año:</strong> {movie.year}
+                </Typography>
+                <Typography variant="body2" sx={{ mb: 0.5 }}>
+                  <strong>Géneros:</strong> {movie.genres.join(', ')}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Rating:</strong> {movie.rating.toFixed(1)} / 10
+                </Typography>
+              </Box>
+            </motion.div>
           </motion.div>
         </Box>
       </Container>
