@@ -6,8 +6,7 @@ import {
   Container,
   Grid,
   Box,
-  IconButton,
-  Paper
+  IconButton
 } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
@@ -21,14 +20,11 @@ export default function Home({ toggleMode, mode }) {
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
 
-  // 🔝 Cargar y ordenar por rating
   useEffect(() => {
-    const sorted = getMovies().sort((a, b) => b.rating - a.rating)
-    setMovies(sorted)
+    setMovies(getMovies())
     setGenres(getAllGenres())
   }, [])
 
-  // 🔍 Filtro por búsqueda y género
   const filtered = useMemo(() => {
     const q = query.toLowerCase()
     return movies.filter(
@@ -40,14 +36,7 @@ export default function Home({ toggleMode, mode }) {
 
   return (
     <div>
-      {/* 🔝 Barra superior */}
-      <AppBar
-        position="sticky"
-        sx={{
-          background: 'linear-gradient(90deg, #141414 0%, #1e1e1e 100%)',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
-        }}
-      >
+      <AppBar position="sticky" sx={{ background: '#141414' }}>
         <Toolbar
           sx={{
             flexDirection: { xs: 'column', sm: 'row' },
@@ -67,8 +56,6 @@ export default function Home({ toggleMode, mode }) {
               Autor: Jorge Patricio Santamaría Cherrez
             </Typography>
           </Box>
-
-          {/* Botón de tema */}
           <IconButton
             onClick={toggleMode}
             color="inherit"
@@ -78,29 +65,14 @@ export default function Home({ toggleMode, mode }) {
           </IconButton>
         </Toolbar>
       </AppBar>
-
-      {/* Contenido */}
-      <Container maxWidth="lg" sx={{ mt: 3, mb: 6 }}>
-        {/* 🔍 Panel de búsqueda con Paper */}
-        <Paper
-          elevation={4}
-          sx={{
-            p: 2,
-            borderRadius: 3,
-            mb: 3,
-            backgroundColor: 'background.default'
+      <Container maxWidth="lg" sx={{ mt: 2, mb: 6 }}>
+        <SearchFilter
+          genres={genres}
+          onChange={({ query, genre }) => {
+            setQuery(query)
+            setGenre(genre)
           }}
-        >
-          <SearchFilter
-            genres={genres}
-            onChange={({ query, genre }) => {
-              setQuery(query)
-              setGenre(genre)
-            }}
-          />
-        </Paper>
-
-        {/* 🎞️ Grid de películas */}
+        />
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {filtered.map((movie) => (
             <Grid item key={movie.id} xs={6} sm={4} md={3} lg={2}>
@@ -108,18 +80,12 @@ export default function Home({ toggleMode, mode }) {
             </Grid>
           ))}
         </Grid>
-
-        {/* Mensaje si no hay resultados */}
         {filtered.length === 0 && (
-          <Box
-            mt={6}
-            textAlign="center"
-            sx={{ color: '#1e88e5', fontWeight: 600 }}
-          >
+          <Box mt={6} textAlign="center" sx={{ color: '#1e88e5', fontWeight: 600 }}>
             No se encontraron resultados.
           </Box>
         )}
       </Container>
     </div>
   )
-            }
+}
