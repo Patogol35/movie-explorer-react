@@ -36,6 +36,7 @@ export default function Home({ toggleMode, mode }) {
 
   return (
     <div>
+      {/* 🔝 AppBar */}
       <AppBar position="sticky" sx={{ background: '#141414' }}>
         <Toolbar
           sx={{
@@ -56,6 +57,7 @@ export default function Home({ toggleMode, mode }) {
               Autor: Jorge Patricio Santamaría Cherrez
             </Typography>
           </Box>
+
           <IconButton
             onClick={toggleMode}
             color="inherit"
@@ -65,7 +67,9 @@ export default function Home({ toggleMode, mode }) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="lg" sx={{ mt: 2, mb: 6 }}>
+
+      {/* 🎯 Contenido */}
+      <Container maxWidth="lg" sx={{ mt: 3, pb: 6 }}>
         <SearchFilter
           genres={genres}
           onChange={({ query, genre }) => {
@@ -73,15 +77,33 @@ export default function Home({ toggleMode, mode }) {
             setGenre(genre)
           }}
         />
-        <Grid container spacing={2} sx={{ mt: 1 }}>
+
+        {/* ✅ Grid de películas */}
+        <Grid
+          container
+          spacing={3}               // 🔑 más espacio entre cards
+          sx={{
+            mt: 2,
+            pb: 4,                   // 🔑 padding-bottom extra para evitar que el último card quede pegado
+          }}
+        >
           {filtered.map((movie) => (
-            <Grid item key={movie.id} xs={6} sm={4} md={3} lg={2}>
+            <Grid
+              item
+              key={movie.id}
+              xs={12} sm={6} md={4} lg={3} xl={2} // 🔑 Responsive más limpio
+            >
               <MovieCard movie={movie} />
             </Grid>
           ))}
         </Grid>
+
         {filtered.length === 0 && (
-          <Box mt={6} textAlign="center" sx={{ color: '#1e88e5', fontWeight: 600 }}>
+          <Box
+            mt={6}
+            textAlign="center"
+            sx={{ color: '#1e88e5', fontWeight: 600 }}
+          >
             No se encontraron resultados.
           </Box>
         )}
