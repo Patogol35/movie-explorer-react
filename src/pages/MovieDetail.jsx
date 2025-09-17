@@ -11,14 +11,15 @@ export default function MovieDetail() {
 
   if (!movie) {
     return (
-      <Container sx={{ mt: 6 }}>
+      <Container sx={{ mt: 6, textAlign: 'center' }}>
         <Typography variant="h6">Película no encontrada.</Typography>
         <Button
           component={Link}
           to="/"
           startIcon={<ArrowBackIcon />}
-          sx={{ mt: 2 }}
-          aria-label="Volver al inicio"
+          sx={{ mt: 3 }}
+          variant="contained"
+          color="primary"
         >
           Ir al inicio
         </Button>
@@ -32,61 +33,85 @@ export default function MovieDetail() {
         component={Link}
         to="/"
         startIcon={<ArrowBackIcon />}
-        aria-label="Volver al inicio"
+        sx={{ mb: 3 }}
+        variant="outlined"
+        color="primary"
       >
         Volver
       </Button>
+
       <Box
-        className="detail-grid"
         sx={{
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', md: '340px 1fr' },
-          gap: 3,
-          alignItems: 'start',
-          mt: 2
+          gap: 4,
+          alignItems: 'start'
         }}
       >
+        {/* Poster con animación */}
         <motion.img
           src={movie.posterUrl}
           alt={movie.title}
           style={{
             width: '100%',
-            borderRadius: '12px',
-            boxShadow: '0 8px 30px rgba(0,0,0,0.25)'
+            borderRadius: 12,
+            boxShadow: '0 12px 35px rgba(0,0,0,0.25)',
+            maxHeight: 500,
+            objectFit: 'cover'
           }}
           whileHover={{ scale: 1.03 }}
           transition={{ duration: 0.3 }}
         />
-        <Box>
-          <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
+
+        {/* Información */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
             {movie.title}{' '}
             <Typography component="span" sx={{ opacity: 0.7, fontWeight: 400 }}>
               ({movie.year})
             </Typography>
           </Typography>
-          <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+
+          {/* Géneros */}
+          <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {movie.genres.map((g) => (
-              <Chip key={g} label={g} variant="outlined" />
+              <Chip key={g} label={g} variant="outlined" color="primary" />
             ))}
           </Box>
-          <Typography sx={{ mt: 2, mb: 2, color: 'text.secondary' }}>
+
+          {/* Overview */}
+          <Typography sx={{ mt: 3, mb: 2, color: 'text.secondary', lineHeight: 1.6 }}>
             {movie.overview}
           </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+
+          {/* Rating */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1 }}>
             <Rating value={movie.rating / 2} precision={0.1} readOnly />
-            <Typography sx={{ fontWeight: 700 }}>
+            <Typography sx={{ fontWeight: 700, color: '#fbc02d' }}>
               {movie.rating.toFixed(1)} / 10
             </Typography>
           </Box>
-          <Box sx={{ mt: 3 }}>
-            <Typography variant="subtitle2" sx={{ opacity: 0.9 }}>
+
+          {/* Detalles extra */}
+          <Box sx={{ mt: 4 }}>
+            <Typography variant="subtitle2" sx={{ opacity: 0.9, mb: 1 }}>
               Detalles
             </Typography>
-            <Typography variant="body2" sx={{ mt: 1 }}>
+            <Typography variant="body2" sx={{ mb: 0.5 }}>
               <strong>Año:</strong> {movie.year}
             </Typography>
+            <Typography variant="body2" sx={{ mb: 0.5 }}>
+              <strong>Géneros:</strong> {movie.genres.join(', ')}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Rating:</strong> {movie.rating.toFixed(1)} / 10
+            </Typography>
           </Box>
-        </Box>
+        </motion.div>
       </Box>
     </Container>
   )
