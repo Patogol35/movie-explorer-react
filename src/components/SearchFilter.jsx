@@ -9,8 +9,51 @@ import {
   Box,
   InputAdornment
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
+
+// 🔹 Botón limpiar reutilizable
+const ClearButton = styled(IconButton)(({ theme }) => ({
+  background: 'transparent',
+  color: '#1e88e5',
+  padding: 0,
+  width: 'auto',
+  height: 'auto',
+  minWidth: 'auto',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: '50%',
+  transition: 'all 0.3s',
+  '&:hover': {
+    background: 'rgba(30,136,229,0.1)',
+  },
+}))
+
+// 🔹 Input estilizado
+const SearchInput = styled(TextField)(({ theme }) => ({
+  '& .MuiInputBase-root': {
+    bgcolor: 'background.paper',
+    borderRadius: 8,
+    transition: 'all 0.3s',
+    '&:focus-within': {
+      boxShadow: '0 0 8px rgba(255,255,0,0.5)',
+      borderColor: '#fbc02d'
+    }
+  }
+}))
+
+// 🔹 Select estilizado
+const GenreSelect = styled(Select)(({ theme }) => ({
+  bgcolor: 'background.paper',
+  borderRadius: 8,
+  transition: 'all 0.3s',
+  '&:focus-within': {
+    boxShadow: '0 0 8px rgba(255,255,0,0.5)',
+    borderColor: '#fbc02d'
+  }
+}))
 
 export default function SearchFilter({ genres = [], onChange }) {
   const [query, setQuery] = React.useState('')
@@ -36,7 +79,7 @@ export default function SearchFilter({ genres = [], onChange }) {
       }}
     >
       {/* 🔹 Input con icono de búsqueda */}
-      <TextField
+      <SearchInput
         label="Buscar película"
         variant="outlined"
         value={query}
@@ -51,68 +94,27 @@ export default function SearchFilter({ genres = [], onChange }) {
             </InputAdornment>
           )
         }}
-        sx={{
-          '& .MuiInputBase-root': {
-            bgcolor: 'background.paper',
-            borderRadius: 1,
-            transition: 'all 0.3s',
-            '&:focus-within': {
-              boxShadow: '0 0 8px rgba(255,255,0,0.5)',
-              borderColor: '#fbc02d'
-            }
-          }
-        }}
       />
 
       {/* 🔹 Filtro por género */}
       <FormControl size="small" sx={{ minWidth: 160 }}>
         <InputLabel>Género</InputLabel>
-        <Select
+        <GenreSelect
           value={genre}
           label="Género"
           onChange={(e) => setGenre(e.target.value)}
-          sx={{
-            bgcolor: 'background.paper',
-            borderRadius: 1,
-            transition: 'all 0.3s',
-            '&:focus-within': {
-              boxShadow: '0 0 8px rgba(255,255,0,0.5)',
-              borderColor: '#fbc02d'
-            }
-          }}
         >
           <MenuItem value="">Todos</MenuItem>
           {genres.map((g) => (
-            <MenuItem key={g} value={g}>
-              {g}
-            </MenuItem>
+            <MenuItem key={g} value={g}>{g}</MenuItem>
           ))}
-        </Select>
+        </GenreSelect>
       </FormControl>
 
-      {/* 🔹 Botón limpiar transparente y azul */}
-      {(query || genre) && (
-        <IconButton
-          onClick={clear}
-          aria-label="Limpiar filtros"
-          sx={{
-            bgcolor: 'transparent',      // sin fondo
-            color: '#1e88e5',            // azul
-            p: 0,
-            width: 'auto',
-            height: 'auto',
-            minWidth: 'auto',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            '&:hover': {
-              bgcolor: 'rgba(30,136,229,0.1)' // azul claro transparente
-            }
-          }}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
-      )}
+      {/* 🔹 Botón limpiar */}
+      {(query || genre) && <ClearButton onClick={clear} aria-label="Limpiar filtros">
+        <CloseIcon fontSize="small" />
+      </ClearButton>}
     </Box>
   )
 }
