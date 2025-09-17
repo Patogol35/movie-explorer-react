@@ -1,0 +1,8 @@
+html, body, #root { height: 100%; }
+body { margin: 0; font-family: Roboto, 'Helvetica Neue', Arial, sans-serif; }
+/* grid responsivo similar al Angular */
+.MuiGrid-root { }
+/* pequeño ajuste de imagen en detalle para móviles */
+@media (max-width: 900px) {
+  .detail-grid { grid-template-columns: 1fr !important; }
+}
