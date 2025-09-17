@@ -11,12 +11,14 @@ export default function MovieCard({ movie }) {
       <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.25 }}>
         <Card
           sx={{
-            height: '100%',
+            width: 220, // tamaño fijo
+            height: 360, // alto fijo
             display: 'flex',
             flexDirection: 'column',
             cursor: 'pointer',
             borderRadius: 2,
-            boxShadow: '0 4px 15px rgba(0,0,0,0.15)'
+            boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
+            overflow: 'hidden'
           }}
           elevation={3}
         >
@@ -24,11 +26,15 @@ export default function MovieCard({ movie }) {
             component="img"
             image={movie.posterUrl}
             alt={movie.title}
-            sx={{ aspectRatio: '2/3', objectFit: 'cover' }}
+            sx={{
+              width: '100%',
+              height: 280, // fija altura de la imagen
+              objectFit: 'cover'
+            }}
             loading="lazy"
           />
-          <CardContent>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          <CardContent sx={{ flexGrow: 1, p: 1.5 }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 600 }} noWrap>
               {movie.title}{' '}
               <Typography component="span" sx={{ opacity: 0.7 }}>
                 ({movie.year})
@@ -47,9 +53,7 @@ export default function MovieCard({ movie }) {
                   <Chip key={g} label={g} size="small" />
                 ))}
               </Box>
-              <Box
-                sx={{ display: 'flex', alignItems: 'center', gap: 0.5, fontWeight: 600 }}
-              >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, fontWeight: 600 }}>
                 <StarIcon fontSize="small" /> {movie.rating.toFixed(1)}
               </Box>
             </Box>
