@@ -90,7 +90,7 @@ export default function SearchFilter({ genres = [], onChange }) {
         </Select>
       </FormControl>
 
-      {/* 🔹 Botón limpiar animado */}
+      {/* 🔹 Botón limpiar compacto */}
       {(query || genre) && (
         <IconButton
           onClick={clear}
@@ -98,13 +98,16 @@ export default function SearchFilter({ genres = [], onChange }) {
           sx={{
             bgcolor: '#fbc02d',
             color: '#000',
+            p: 0.5,          // padding reducido
+            minWidth: 'auto', // elimina ancho mínimo
+            borderRadius: 1,
             transition: 'all 0.3s',
             '&:hover': {
               bgcolor: '#ffd54f'
             }
           }}
         >
-          <CloseIcon />
+          <CloseIcon fontSize="small" />
         </IconButton>
       )}
     </Box>
