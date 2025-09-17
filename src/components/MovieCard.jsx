@@ -1,65 +1,124 @@
 import React from 'react'
-import { Card, CardMedia, CardContent, Typography, Chip, Box } from '@mui/material'
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Chip,
+  Box
+} from '@mui/material'
 import { Link } from 'react-router-dom'
 import StarIcon from '@mui/icons-material/Star'
 import { motion } from 'framer-motion'
 
 export default function MovieCard({ movie }) {
   if (!movie) return null
+
   return (
-    <Link to={`/movie/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-      <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.25 }}>
+    <Link
+      to={`/movie/${movie.id}`}
+      style={{ textDecoration: 'none', color: 'inherit' }}
+    >
+      <motion.div
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        transition={{ duration: 0.25 }}
+      >
         <Card
           sx={{
-            width: 220, // tamaño fijo
-            height: 360, // alto fijo
-            display: 'flex',
-            flexDirection: 'column',
-            cursor: 'pointer',
-            borderRadius: 2,
-            boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
-            overflow: 'hidden'
+            width: '100%',
+            maxWidth: 250,
+            borderRadius: 3,
+            overflow: 'hidden',
+            bgcolor: 'background.paper',
+            boxShadow: '0 8px 25px rgba(0,0,0,0.2)',
+            transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+            '&:hover': {
+              transform: 'translateY(-6px) scale(1.04)',
+              boxShadow: '0 12px 30px rgba(0,0,0,0.35)'
+            }
           }}
-          elevation={3}
+          elevation={4}
         >
-          <CardMedia
-            component="img"
-            image={movie.posterUrl}
-            alt={movie.title}
-            sx={{
-              width: '100%',
-              height: 280, // fija altura de la imagen
-              objectFit: 'cover'
-            }}
-            loading="lazy"
-          />
-          <CardContent sx={{ flexGrow: 1, p: 1.5 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 600 }} noWrap>
-              {movie.title}{' '}
-              <Typography component="span" sx={{ opacity: 0.7 }}>
-                ({movie.year})
-              </Typography>
+          {/* Imagen con overlay y rating */}
+          <Box sx={{ position: 'relative' }}>
+            <CardMedia
+              component="img"
+              image={movie.posterUrl}
+              alt={movie.title}
+              sx={{
+                height: 300,
+                objectFit: 'cover',
+                filter: 'brightness(0.9)'
+              }}
+              loading="lazy"
+            />
+
+            {/* Rating flotante */}
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 8,
+                right: 8,
+                bgcolor: 'rgba(0,0,0,0.7)',
+                px: 1,
+                py: 0.3,
+                borderRadius: 2,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5,
+                color: 'gold',
+                fontWeight: 600,
+                fontSize: '0.85rem'
+              }}
+            >
+              <StarIcon fontSize="small" /> {movie.rating.toFixed(1)}
+            </Box>
+          </Box>
+
+          {/* Título y géneros */}
+          <CardContent sx={{ p: 1.5 }}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: 700,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+              }}
+            >
+              {movie.title} ({movie.year})
             </Typography>
+
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 0.5,
                 mt: 1
               }}
             >
-              <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                {movie.genres.map((g) => (
-                  <Chip key={g} label={g} size="small" />
-                ))}
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, fontWeight: 600 }}>
-                <StarIcon fontSize="small" /> {movie.rating.toFixed(1)}
-              </Box>
+              {movie.genres.slice(0, 2).map((g) => (
+                <Chip
+                  key={g}
+                  label={g}
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                />
+              ))}
+              {movie.genres.length > 2 && (
+                <Chip
+                  label={`+${movie.genres.length - 2}`}
+                  size="small"
+                  variant="outlined"
+                />
+              )}
             </Box>
           </CardContent>
         </Card>
       </motion.div>
     </Link>
   )
-                        }
+}
