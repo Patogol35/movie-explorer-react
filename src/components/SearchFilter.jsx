@@ -90,7 +90,7 @@ export default function SearchFilter({ genres = [], onChange }) {
         </Select>
       </FormControl>
 
-      {/* 🔹 Botón limpiar compacto */}
+      {/* 🔹 Botón limpiar justo del tamaño de la X */}
       {(query || genre) && (
         <IconButton
           onClick={clear}
@@ -98,9 +98,14 @@ export default function SearchFilter({ genres = [], onChange }) {
           sx={{
             bgcolor: '#fbc02d',
             color: '#000',
-            p: 0.5,          // padding reducido
-            minWidth: 'auto', // elimina ancho mínimo
-            borderRadius: 1,
+            p: 0,              // padding eliminado
+            width: 'auto',
+            height: 'auto',
+            minWidth: 'auto',
+            borderRadius: '50%', // círculo perfecto
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             transition: 'all 0.3s',
             '&:hover': {
               bgcolor: '#ffd54f'
@@ -112,4 +117,4 @@ export default function SearchFilter({ genres = [], onChange }) {
       )}
     </Box>
   )
-}
+        }
