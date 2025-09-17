@@ -1,6 +1,16 @@
 import React from 'react'
-import { TextField, FormControl, InputLabel, Select, MenuItem, IconButton, Box } from '@mui/material'
+import {
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  IconButton,
+  Box,
+  InputAdornment
+} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import SearchIcon from '@mui/icons-material/Search'
 
 export default function SearchFilter({ genres = [], onChange }) {
   const [query, setQuery] = React.useState('')
@@ -19,13 +29,13 @@ export default function SearchFilter({ genres = [], onChange }) {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: {
-          xs: '1fr',
-          sm: '1fr 200px auto'
-        },
-        gap: 1
+        gridTemplateColumns: { xs: '1fr', sm: '1fr 200px auto' },
+        gap: 1,
+        alignItems: 'center',
+        mb: 3
       }}
     >
+      {/* 🔹 Input con icono de búsqueda */}
       <TextField
         label="Buscar película"
         variant="outlined"
@@ -33,14 +43,43 @@ export default function SearchFilter({ genres = [], onChange }) {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Ej: Titanic"
         fullWidth
+        size="small"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon color="action" />
+            </InputAdornment>
+          )
+        }}
+        sx={{
+          '& .MuiInputBase-root': {
+            bgcolor: 'background.paper',
+            borderRadius: 1,
+            transition: 'all 0.3s',
+            '&:focus-within': {
+              boxShadow: '0 0 8px rgba(255,255,0,0.5)',
+              borderColor: '#fbc02d'
+            }
+          }
+        }}
       />
-      <FormControl>
+
+      {/* 🔹 Filtro por género */}
+      <FormControl size="small" sx={{ minWidth: 160 }}>
         <InputLabel>Género</InputLabel>
         <Select
           value={genre}
           label="Género"
           onChange={(e) => setGenre(e.target.value)}
-          sx={{ minWidth: 160 }}
+          sx={{
+            bgcolor: 'background.paper',
+            borderRadius: 1,
+            transition: 'all 0.3s',
+            '&:focus-within': {
+              boxShadow: '0 0 8px rgba(255,255,0,0.5)',
+              borderColor: '#fbc02d'
+            }
+          }}
         >
           <MenuItem value="">Todos</MenuItem>
           {genres.map((g) => (
@@ -50,9 +89,24 @@ export default function SearchFilter({ genres = [], onChange }) {
           ))}
         </Select>
       </FormControl>
-      <IconButton onClick={clear} aria-label="Limpiar filtros">
-        <CloseIcon />
-      </IconButton>
+
+      {/* 🔹 Botón limpiar animado */}
+      {(query || genre) && (
+        <IconButton
+          onClick={clear}
+          aria-label="Limpiar filtros"
+          sx={{
+            bgcolor: '#fbc02d',
+            color: '#000',
+            transition: 'all 0.3s',
+            '&:hover': {
+              bgcolor: '#ffd54f'
+            }
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      )}
     </Box>
   )
 }
