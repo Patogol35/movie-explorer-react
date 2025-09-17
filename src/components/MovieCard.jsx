@@ -20,7 +20,7 @@ export default function MovieCard({ movie }) {
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
       <motion.div
-        whileHover={{ scale: 1.03 }}
+        whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
         transition={{ duration: 0.25 }}
       >
@@ -31,28 +31,53 @@ export default function MovieCard({ movie }) {
             borderRadius: 3,
             overflow: 'hidden',
             bgcolor: 'background.paper',
-            boxShadow: '0 8px 25px rgba(0,0,0,0.2)',
+            boxShadow: (theme) =>
+              theme.palette.mode === 'dark'
+                ? '0 10px 30px rgba(30,136,229,0.25)'
+                : '0 10px 25px rgba(0,0,0,0.25)',
             transition: 'transform 0.25s ease, box-shadow 0.25s ease',
             '&:hover': {
-              transform: 'translateY(-6px) scale(1.04)',
-              boxShadow: '0 12px 30px rgba(0,0,0,0.35)'
+              transform: 'translateY(-6px) scale(1.03)',
+              boxShadow: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? '0 16px 35px rgba(30,136,229,0.35)'
+                  : '0 16px 35px rgba(0,0,0,0.35)'
             }
           }}
-          elevation={4}
         >
-          {/* Imagen con overlay y rating */}
           <Box sx={{ position: 'relative' }}>
-            <CardMedia
-              component="img"
-              image={movie.posterUrl}
-              alt={movie.title}
-              sx={{
-                height: 300,
-                objectFit: 'cover',
-                filter: 'brightness(0.9)'
-              }}
-              loading="lazy"
-            />
+            {/* Imagen con efecto parallax */}
+            <motion.div
+              whileHover={{ scale: 1.08 }}
+              transition={{ duration: 0.4 }}
+            >
+              <CardMedia
+                component="img"
+                image={movie.posterUrl}
+                alt={movie.title}
+                sx={{
+                  height: 300,
+                  objectFit: 'cover',
+                  filter: 'brightness(0.9)'
+                }}
+                loading="lazy"
+              />
+            </motion.div>
+
+            {/* Badge TOP si rating >= 8.5 */}
+            {movie.rating >= 8.5 && (
+              <Chip
+                label="TOP"
+                size="small"
+                color="secondary"
+                sx={{
+                  position: 'absolute',
+                  top: 8,
+                  left: 8,
+                  fontWeight: 700
+                }}
+              />
+            )}
 
             {/* Rating flotante */}
             <Box
@@ -106,6 +131,12 @@ export default function MovieCard({ movie }) {
                   size="small"
                   variant="outlined"
                   color="primary"
+                  sx={{
+                    '&:hover': {
+                      bgcolor: 'primary.main',
+                      color: '#fff'
+                    }
+                  }}
                 />
               ))}
               {movie.genres.length > 2 && (
