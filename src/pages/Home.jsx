@@ -36,7 +36,7 @@ export default function Home({ toggleMode, mode }) {
 
   return (
     <div>
-      {/* 🔝 AppBar */}
+      {/* 🔝 Barra superior */}
       <AppBar position="sticky" sx={{ background: '#141414' }}>
         <Toolbar
           sx={{
@@ -78,20 +78,21 @@ export default function Home({ toggleMode, mode }) {
           }}
         />
 
-        {/* ✅ Grid de películas */}
+        {/* ✅ Grid centrado de películas */}
         <Grid
           container
-          spacing={3}               // 🔑 más espacio entre cards
+          spacing={3}             // espacio entre cards
+          justifyContent="center" // 🔑 centra las cards horizontalmente
           sx={{
             mt: 2,
-            pb: 4,                   // 🔑 padding-bottom extra para evitar que el último card quede pegado
+            pb: 4                  // padding inferior extra
           }}
         >
           {filtered.map((movie) => (
             <Grid
               item
               key={movie.id}
-              xs={12} sm={6} md={4} lg={3} xl={2} // 🔑 Responsive más limpio
+              xs={12} sm={6} md={4} lg={3} xl={2} // responsive limpio
             >
               <MovieCard movie={movie} />
             </Grid>
