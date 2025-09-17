@@ -9,7 +9,7 @@ export default function MovieDetail() {
   const { id } = useParams()
   const movie = getById(Number(id))
 
-  // 🔝 Scroll al top al entrar
+  // 🔝 Scroll al top cada vez que entres a esta película
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [id])
@@ -41,22 +41,37 @@ export default function MovieDetail() {
                      url(${movie.posterUrl}) center/cover no-repeat`,
       }}
     >
+      {/* 🔝 Botón flotante para volver al inicio */}
+      <Button
+        component={Link}
+        to="/"
+        startIcon={<ArrowBackIcon fontSize="large" />}
+        sx={{
+          position: 'fixed',
+          top: 20,
+          left: 20,
+          bgcolor: 'rgba(0,0,0,0.6)',
+          color: 'white',
+          '&:hover': { bgcolor: '#fbc02d', color: '#000' },
+          borderRadius: '50%',
+          minWidth: 50,
+          minHeight: 50,
+          zIndex: 1000
+        }}
+      />
+
       <Container sx={{ pt: { xs: 3, sm: 4, md: 6 } }}>
-        {/* Botón volver */}
-        <Button
-          component={Link}
-          to="/"
-          startIcon={<ArrowBackIcon />}
-          sx={{
-            mb: 4,
-            color: 'white',
-            borderColor: 'white',
-            '&:hover': { borderColor: '#fbc02d', color: '#fbc02d' }
-          }}
-          variant="outlined"
-        >
-          Volver
-        </Button>
+        {/* Breadcrumb amigable */}
+        <Box sx={{ mb: 3, color: 'rgba(255,255,255,0.8)' }}>
+          <Link
+            to="/"
+            style={{ textDecoration: 'none', color: '#fbc02d', fontWeight: 600 }}
+          >
+            🏠 Inicio
+          </Link>
+          {' / '}
+          <span>{movie.title}</span>
+        </Box>
 
         {/* Contenido principal */}
         <Box
@@ -67,7 +82,7 @@ export default function MovieDetail() {
             alignItems: 'start'
           }}
         >
-          {/* Poster */}
+          {/* Poster animado */}
           <motion.img
             src={movie.posterUrl}
             alt={movie.title}
@@ -83,7 +98,7 @@ export default function MovieDetail() {
             transition={{ duration: 0.6 }}
           />
 
-          {/* Info */}
+          {/* Información */}
           <Box sx={{ color: 'white' }}>
             {/* Título */}
             <motion.div
@@ -191,4 +206,4 @@ export default function MovieDetail() {
       </Container>
     </Box>
   )
-        }
+}
