@@ -90,25 +90,23 @@ export default function SearchFilter({ genres = [], onChange }) {
         </Select>
       </FormControl>
 
-      {/* 🔹 Botón limpiar justo del tamaño de la X */}
+      {/* 🔹 Botón limpiar transparente y azul */}
       {(query || genre) && (
         <IconButton
           onClick={clear}
           aria-label="Limpiar filtros"
           sx={{
-            bgcolor: '#fbc02d',
-            color: '#000',
-            p: 0,              // padding eliminado
+            bgcolor: 'transparent',      // sin fondo
+            color: '#1e88e5',            // azul
+            p: 0,
             width: 'auto',
             height: 'auto',
             minWidth: 'auto',
-            borderRadius: '50%', // círculo perfecto
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'all 0.3s',
             '&:hover': {
-              bgcolor: '#ffd54f'
+              bgcolor: 'rgba(30,136,229,0.1)' // azul claro transparente
             }
           }}
         >
@@ -117,4 +115,4 @@ export default function SearchFilter({ genres = [], onChange }) {
       )}
     </Box>
   )
-        }
+}
