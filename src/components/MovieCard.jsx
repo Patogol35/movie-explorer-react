@@ -25,7 +25,7 @@ export default function MovieCard({ movie }) {
       <motion.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.3 }}>
         <Card
           sx={{
-            width: 240,
+            width: '100%',
             height: 380,
             display: 'flex',
             flexDirection: 'column',
@@ -94,4 +94,4 @@ export default function MovieCard({ movie }) {
       </motion.div>
     </Link>
   )
-          }
+}
