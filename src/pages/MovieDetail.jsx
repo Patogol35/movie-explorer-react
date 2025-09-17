@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getById } from '../services/movies'
 import { Container, Button, Typography, Box, Chip, Rating } from '@mui/material'
@@ -8,6 +8,11 @@ import { motion } from 'framer-motion'
 export default function MovieDetail() {
   const { id } = useParams()
   const movie = getById(Number(id))
+
+  // 🔝 Scroll al top al entrar
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [id])
 
   if (!movie) {
     return (
@@ -31,13 +36,12 @@ export default function MovieDetail() {
       sx={{
         position: 'relative',
         minHeight: '100vh',
-        pb: 8,
-        // Fondo con overlay oscuro
+        pb: { xs: 6, md: 8 },
         background: `linear-gradient(to bottom, rgba(15,15,15,0.85) 0%, rgba(15,15,15,0.95) 100%), 
                      url(${movie.posterUrl}) center/cover no-repeat`,
       }}
     >
-      <Container sx={{ pt: { xs: 3, md: 6 } }}>
+      <Container sx={{ pt: { xs: 3, sm: 4, md: 6 } }}>
         {/* Botón volver */}
         <Button
           component={Link}
@@ -60,10 +64,10 @@ export default function MovieDetail() {
             display: 'grid',
             gridTemplateColumns: { xs: '1fr', md: '340px 1fr' },
             gap: { xs: 4, md: 6 },
-            alignItems: 'center'
+            alignItems: 'start'
           }}
         >
-          {/* Poster con animación */}
+          {/* Poster */}
           <motion.img
             src={movie.posterUrl}
             alt={movie.title}
@@ -102,7 +106,7 @@ export default function MovieDetail() {
               </Typography>
             </motion.div>
 
-            {/* Géneros animados */}
+            {/* Géneros */}
             <Box sx={{ mt: 1.5, display: 'flex', flexWrap: 'wrap', gap: 1.2 }}>
               {movie.genres.map((g, i) => (
                 <motion.div
@@ -161,7 +165,7 @@ export default function MovieDetail() {
               </Box>
             </motion.div>
 
-            {/* Detalles extra */}
+            {/* Detalles */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -187,4 +191,4 @@ export default function MovieDetail() {
       </Container>
     </Box>
   )
-                      }
+        }
