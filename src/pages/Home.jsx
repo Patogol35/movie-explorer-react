@@ -1,113 +1,141 @@
-import { useTheme } from "@mui/material/styles";
+import { useState, useMemo } from "react";
 import {
-  Box,
+  AppBar,
+  Toolbar,
   Typography,
+  IconButton,
+  InputBase,
+  Box,
+  FormControl,
+  Select,
+  MenuItem,
   Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Button,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useCarrito } from "../context/CarritoContext";
-import { toast } from "react-toastify";
+import SearchIcon from "@mui/icons-material/Search";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useTheme } from "@mui/material/styles";
+import MovieCard from "../components/MovieCard";
 
-export default function Home({ mode, toggleMode }) {
+export default function Home({ mode, toggleMode, movies, genres }) {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const { agregarAlCarrito } = useCarrito();
+  const [query, setQuery] = useState("");
+  const [genre, setGenre] = useState("");
 
-  const productos = [
-    {
-      id: 1,
-      nombre: "Laptop Gamer",
-      descripcion: "Potente laptop para juegos",
-      precio: 1200,
-      imagen: "https://via.placeholder.com/400x200",
-    },
-    {
-      id: 2,
-      nombre: "Smartphone",
-      descripcion: "Teléfono inteligente de última generación",
-      precio: 800,
-      imagen: "https://via.placeholder.com/400x200",
-    },
-  ];
-
-  const handleDetalle = (producto) => {
-    navigate(`/producto/${producto.id}`, { state: { producto } });
-  };
-
-  const handleAgregar = (producto) => {
-    agregarAlCarrito(producto);
-    toast.success(`${producto.nombre} agregado al carrito`);
-  };
+  // 🔎 Filtrado optimizado
+  const filtered = useMemo(() => {
+    return movies.filter((m) => {
+      const matchesQuery = m.title.toLowerCase().includes(query.toLowerCase());
+      const matchesGenre = genre ? m.genres.includes(genre) : true;
+      return matchesQuery && matchesGenre;
+    });
+  }, [movies, query, genre]);
 
   return (
     <Box
       sx={{
         flexGrow: 1,
-        p: 3,
-        minHeight: "100vh",
         bgcolor: theme.palette.background.default,
-        color: theme.palette.text.primary,
+        minHeight: "100vh",
       }}
     >
-      <Typography variant="h4" gutterBottom>
-        Lista de Productos
-      </Typography>
-
-      <Button
-        variant="contained"
-        onClick={toggleMode}
-        sx={{ mb: 3 }}
-      >
-        Cambiar a {mode === "light" ? "Dark" : "Light"} Mode
-      </Button>
-
-      <Grid container spacing={3}>
-        {productos.map((producto) => (
-          <Grid item xs={12} sm={6} md={4} key={producto.id}>
-            <Card
-              sx={{
-                bgcolor: theme.palette.background.paper,
-                color: theme.palette.text.primary,
-              }}
+      {/* 🔹 AppBar */}
+      <AppBar position="sticky" color="default" sx={{ bgcolor: "background.default" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: { xs: "stretch", sm: "center" },
+            gap: 2,
+          }}
+        >
+          {/* Título */}
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              🎬 Movie Explorer
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ fontWeight: 700, color: "primary.main" }}
             >
-              <CardMedia
-                component="img"
-                height="200"
-                image={producto.imagen}
-                alt={producto.nombre}
-              />
-              <CardContent>
-                <Typography variant="h6">{producto.nombre}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {producto.descripcion}
-                </Typography>
-                <Typography variant="subtitle1" sx={{ mt: 1 }}>
-                  ${producto.precio}
-                </Typography>
-                <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
-                  <Button
-                    variant="outlined"
-                    onClick={() => handleDetalle(producto)}
-                  >
-                    Ver Detalle
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleAgregar(producto)}
-                  >
-                    Agregar
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
+              Autor: Jorge Patricio Santamaría Cherrez
+            </Typography>
+          </Box>
+
+          {/* Buscador */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              bgcolor: "background.paper",
+              borderRadius: 2,
+              px: 1,
+              flex: 1,
+              maxWidth: 400,
+            }}
+          >
+            <SearchIcon sx={{ color: "text.secondary", mr: 1 }} />
+            <InputBase
+              placeholder="Buscar película…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              sx={{ flex: 1 }}
+            />
+          </Box>
+
+          {/* Selector de género */}
+          <FormControl
+            variant="outlined"
+            size="small"
+            sx={{ minWidth: 150, bgcolor: "background.paper", borderRadius: 2 }}
+          >
+            <Select
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+              displayEmpty
+            >
+              <MenuItem value="">
+                <em>Todos los géneros</em>
+              </MenuItem>
+              {genres.map((g) => (
+                <MenuItem key={g} value={g}>
+                  {g}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          {/* Botón de modo claro/oscuro */}
+          <IconButton onClick={toggleMode} color="inherit" aria-label="Cambiar tema">
+            {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      {/* 🔹 Contenido principal */}
+      <Box p={3}>
+        {filtered.length === 0 ? (
+          <Box
+            sx={{
+              textAlign: "center",
+              mt: 5,
+              color: "text.secondary",
+            }}
+          >
+            <Typography variant="h6">
+              No se encontraron resultados 😢
+            </Typography>
+          </Box>
+        ) : (
+          <Grid container spacing={3}>
+            {filtered.map((movie) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+                <MovieCard movie={movie} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        )}
+      </Box>
     </Box>
   );
 }
