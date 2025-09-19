@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   AppBar,
   Toolbar,
@@ -15,12 +15,21 @@ import SearchIcon from "@mui/icons-material/Search";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import MovieCard from "../components/MovieCard";
+import { getMovies, getAllGenres } from "../services/movies";
 
-export default function Home({ mode, toggleMode, movies, genres }) {
+export default function Home({ mode, toggleMode }) {
+  const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
 
-  // 🔎 Filtrado optimizado
+  // 🔹 Cargar datos al montar
+  useEffect(() => {
+    setMovies(getMovies());
+    setGenres(getAllGenres());
+  }, []);
+
+  // 🔹 Filtrado
   const filtered = useMemo(() => {
     return movies.filter((m) => {
       const matchesQuery = m.title.toLowerCase().includes(query.toLowerCase());
@@ -32,29 +41,23 @@ export default function Home({ mode, toggleMode, movies, genres }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       {/* 🔹 AppBar */}
-      <AppBar
-        position="sticky"
-        sx={{
-          bgcolor: "background.default",
-          color: "text.primary",
-        }}
-      >
+      <AppBar position="sticky" sx={{ bgcolor: "#141414" }}>
         <Toolbar
           sx={{
-            display: "flex",
             flexDirection: { xs: "column", sm: "row" },
-            alignItems: { xs: "stretch", sm: "center" },
-            gap: 2,
+            alignItems: { xs: "flex-start", sm: "center" },
+            justifyContent: "space-between",
+            gap: 1,
           }}
         >
           {/* Título */}
-          <Box sx={{ flexGrow: 1 }}>
+          <Box>
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
               🎬 Movie Explorer
             </Typography>
             <Typography
               variant="subtitle1"
-              sx={{ fontWeight: 700, color: "primary.main" }}
+              sx={{ fontWeight: 700, color: "#1e88e5" }}
             >
               Autor: Jorge Patricio Santamaría Cherrez
             </Typography>
@@ -83,7 +86,6 @@ export default function Home({ mode, toggleMode, movies, genres }) {
 
           {/* Selector de género */}
           <FormControl
-            variant="outlined"
             size="small"
             sx={{ minWidth: 150, bgcolor: "background.paper", borderRadius: 2 }}
           >
@@ -93,7 +95,7 @@ export default function Home({ mode, toggleMode, movies, genres }) {
               displayEmpty
             >
               <MenuItem value="">
-                <em>Todos los géneros</em>
+                <em>Todos</em>
               </MenuItem>
               {genres.map((g) => (
                 <MenuItem key={g} value={g}>
@@ -103,23 +105,23 @@ export default function Home({ mode, toggleMode, movies, genres }) {
             </Select>
           </FormControl>
 
-          {/* Botón de modo claro/oscuro */}
-          <IconButton onClick={toggleMode} color="inherit" aria-label="Cambiar tema">
+          {/* Botón modo oscuro/claro */}
+          <IconButton onClick={toggleMode} color="inherit">
             {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* 🔹 Contenido principal */}
+      {/* Contenido principal */}
       <Box p={3}>
         {filtered.length === 0 ? (
-          <Box sx={{ textAlign: "center", mt: 5, color: "text.secondary" }}>
-            <Typography variant="h6">No se encontraron resultados 😢</Typography>
+          <Box sx={{ textAlign: "center", mt: 5, color: "#1e88e5", fontWeight: 600 }}>
+            No se encontraron resultados.
           </Box>
         ) : (
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justifyContent="center" sx={{ mt: 2, pb: 4 }}>
             {filtered.map((movie) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+              <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={movie.id}>
                 <MovieCard movie={movie} />
               </Grid>
             ))}
