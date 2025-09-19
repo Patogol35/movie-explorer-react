@@ -1,114 +1,113 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import { useTheme } from "@mui/material/styles";
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Container,
-  Grid,
   Box,
-  IconButton
-} from '@mui/material'
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import Brightness7Icon from '@mui/icons-material/Brightness7'
-import SearchFilter from '../components/SearchFilter'
-import MovieCard from '../components/MovieCard'
-import { getMovies, getAllGenres } from '../services/movies'
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Button,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useCarrito } from "../context/CarritoContext";
+import { toast } from "react-toastify";
 
-export default function Home({ toggleMode, mode }) {
-  const [movies, setMovies] = useState([])
-  const [query, setQuery] = useState('')
-  const [genre, setGenre] = useState('')
-  const [genres, setGenres] = useState([])
+export default function Home({ mode, toggleMode }) {
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const { agregarAlCarrito } = useCarrito();
 
-  useEffect(() => {
-    setMovies(getMovies())
-    setGenres(getAllGenres())
-  }, [])
+  const productos = [
+    {
+      id: 1,
+      nombre: "Laptop Gamer",
+      descripcion: "Potente laptop para juegos",
+      precio: 1200,
+      imagen: "https://via.placeholder.com/400x200",
+    },
+    {
+      id: 2,
+      nombre: "Smartphone",
+      descripcion: "Teléfono inteligente de última generación",
+      precio: 800,
+      imagen: "https://via.placeholder.com/400x200",
+    },
+  ];
 
-  const filtered = useMemo(() => {
-    const q = query.toLowerCase()
-    return movies.filter(
-      (m) =>
-        m.title.toLowerCase().includes(q) &&
-        (!genre || m.genres.includes(genre))
-    )
-  }, [movies, query, genre])
+  const handleDetalle = (producto) => {
+    navigate(`/producto/${producto.id}`, { state: { producto } });
+  };
+
+  const handleAgregar = (producto) => {
+    agregarAlCarrito(producto);
+    toast.success(`${producto.nombre} agregado al carrito`);
+  };
 
   return (
-    <div>
-      {/* 🔝 Barra superior */}
-      <AppBar position="sticky" sx={{ background: '#141414' }}>
-        <Toolbar
-          sx={{
-            flexDirection: { xs: 'column', sm: 'row' },
-            alignItems: { xs: 'flex-start', sm: 'center' },
-            justifyContent: 'space-between',
-            gap: 1
-          }}
-        >
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              🎬 Movie Explorer
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{ fontWeight: 700, color: '#1e88e5' }}
+    <Box
+      sx={{
+        flexGrow: 1,
+        p: 3,
+        minHeight: "100vh",
+        bgcolor: theme.palette.background.default,
+        color: theme.palette.text.primary,
+      }}
+    >
+      <Typography variant="h4" gutterBottom>
+        Lista de Productos
+      </Typography>
+
+      <Button
+        variant="contained"
+        onClick={toggleMode}
+        sx={{ mb: 3 }}
+      >
+        Cambiar a {mode === "light" ? "Dark" : "Light"} Mode
+      </Button>
+
+      <Grid container spacing={3}>
+        {productos.map((producto) => (
+          <Grid item xs={12} sm={6} md={4} key={producto.id}>
+            <Card
+              sx={{
+                bgcolor: theme.palette.background.paper,
+                color: theme.palette.text.primary,
+              }}
             >
-              Autor: Jorge Patricio Santamaría Cherrez
-            </Typography>
-          </Box>
-
-          <IconButton
-            onClick={toggleMode}
-            color="inherit"
-            aria-label="Cambiar tema"
-          >
-            {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-
-      {/* 🎯 Contenido */}
-      <Container maxWidth="lg" sx={{ mt: 3, pb: 6 }}>
-        <SearchFilter
-          genres={genres}
-          onChange={({ query, genre }) => {
-            setQuery(query)
-            setGenre(genre)
-          }}
-        />
-
-        {/* ✅ Grid centrado de películas */}
-        <Grid
-          container
-          spacing={3}             // espacio entre cards
-          justifyContent="center" // 🔑 centra las cards horizontalmente
-          sx={{
-            mt: 2,
-            pb: 4                  // padding inferior extra
-          }}
-        >
-          {filtered.map((movie) => (
-            <Grid
-              item
-              key={movie.id}
-              xs={12} sm={6} md={4} lg={3} xl={2} // responsive limpio
-            >
-              <MovieCard movie={movie} />
-            </Grid>
-          ))}
-        </Grid>
-
-        {filtered.length === 0 && (
-          <Box
-            mt={6}
-            textAlign="center"
-            sx={{ color: '#1e88e5', fontWeight: 600 }}
-          >
-            No se encontraron resultados.
-          </Box>
-        )}
-      </Container>
-    </div>
-  )
+              <CardMedia
+                component="img"
+                height="200"
+                image={producto.imagen}
+                alt={producto.nombre}
+              />
+              <CardContent>
+                <Typography variant="h6">{producto.nombre}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {producto.descripcion}
+                </Typography>
+                <Typography variant="subtitle1" sx={{ mt: 1 }}>
+                  ${producto.precio}
+                </Typography>
+                <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleDetalle(producto)}
+                  >
+                    Ver Detalle
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleAgregar(producto)}
+                  >
+                    Agregar
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
 }
