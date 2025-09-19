@@ -1,32 +1,40 @@
-import React, { useState, useMemo } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App'
-import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider } from '@mui/material/styles'
-import { getTheme } from './theme'
-import './index.css'
+import React, { useState, useMemo, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import App from "./App";
+import { getTheme } from "./theme";
+import "./index.css";
 
 function Main() {
-  const [mode, setMode] = useState('light')
-  const theme = useMemo(() => getTheme(mode), [mode])
+  // 🔑 Persistencia en localStorage
+  const [mode, setMode] = useState(() => {
+    return localStorage.getItem("themeMode") || "dark";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("themeMode", mode);
+  }, [mode]);
+
+  const theme = useMemo(() => getTheme(mode), [mode]);
 
   function toggleMode() {
-    setMode((prev) => (prev === 'light' ? 'dark' : 'light'))
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
   }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App toggleMode={toggleMode} mode={mode} />
+      <BrowserRouter>
+        <App mode={mode} toggleMode={toggleMode} />
+      </BrowserRouter>
     </ThemeProvider>
-  )
+  );
 }
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Main />
-    </BrowserRouter>
+    <Main />
   </React.StrictMode>
-)
+);
