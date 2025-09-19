@@ -14,11 +14,9 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { useTheme } from "@mui/material/styles";
 import MovieCard from "../components/MovieCard";
 
 export default function Home({ mode, toggleMode, movies, genres }) {
-  const theme = useTheme();
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
 
@@ -32,15 +30,15 @@ export default function Home({ mode, toggleMode, movies, genres }) {
   }, [movies, query, genre]);
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        bgcolor: theme.palette.background.default,
-        minHeight: "100vh",
-      }}
-    >
+    <Box sx={{ flexGrow: 1 }}>
       {/* 🔹 AppBar */}
-      <AppBar position="sticky" color="default" sx={{ bgcolor: "background.default" }}>
+      <AppBar
+        position="sticky"
+        sx={{
+          bgcolor: "background.default",
+          color: "text.primary",
+        }}
+      >
         <Toolbar
           sx={{
             display: "flex",
@@ -115,16 +113,8 @@ export default function Home({ mode, toggleMode, movies, genres }) {
       {/* 🔹 Contenido principal */}
       <Box p={3}>
         {filtered.length === 0 ? (
-          <Box
-            sx={{
-              textAlign: "center",
-              mt: 5,
-              color: "text.secondary",
-            }}
-          >
-            <Typography variant="h6">
-              No se encontraron resultados 😢
-            </Typography>
+          <Box sx={{ textAlign: "center", mt: 5, color: "text.secondary" }}>
+            <Typography variant="h6">No se encontraron resultados 😢</Typography>
           </Box>
         ) : (
           <Grid container spacing={3}>
