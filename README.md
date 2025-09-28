@@ -16,7 +16,7 @@ Funcionalidades
 
 ---
 
-🛠️ Tecnologías usadas
+⚙️ Tecnologías usadas
 - React
 - Vite
 - Material UI (MUI)
@@ -30,26 +30,42 @@ Funcionalidades
 1. Clonar el repositorio:
    ```bash
    git clone https://github.com/tuusuario/movie-explorer.git
+
+2. Ingresar a la carpeta del proyecto
+
+ ```bash
+
    cd movie-explorer
 
-2. Instalar dependencias:
+```
+
+3. Instalar dependencias:
+
+```bash
 
 npm install
 
+```
 
-3. Iniciar el servidor de desarrollo:
+4. Iniciar el servidor de desarrollo:
+
+```bash
 
 npm run dev
 
+```
 
-4. Abrir en el navegador:
+5. Abrir en el navegador:
 
 http://localhost:5173
 
 
----
+--- 
 
 👨‍💻 Autor
 
 Jorge Patricio Santamaría Cherrez
-Portafolio / LinkedIn / GitHub (añade tus enlaces aquí)
+
+Máster en Ingeniería de Software y Sistemas Informáticos
+
+
