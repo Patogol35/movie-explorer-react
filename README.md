@@ -4,7 +4,8 @@ Aplicación web en **React + Vite + Material UI** para explorar una colección d
 
 ---
 
-Funcionalidades
+✨ Funcionalidades
+
 - Búsqueda de películas por título.  
 - Filtro por género  
 - Valoración con rating visual (MUI).  
@@ -16,7 +17,8 @@ Funcionalidades
 
 ---
 
-⚙️ Tecnologías usadas
+⚙️ Tecnologías utilizadas 
+
 - React
 - Vite
 - Material UI (MUI)
