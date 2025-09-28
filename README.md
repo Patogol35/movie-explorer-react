@@ -19,8 +19,7 @@ Aplicación web en **React + Vite + Material UI** para explorar una colección d
 
 ⚙️ Tecnologías utilizadas 
 
-- React
-- Vite
+- React (con Vite)
 - Material UI (MUI)
 - Framer Motion
 - React Router
