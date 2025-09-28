@@ -29,7 +29,7 @@ Aplicación web en **React + Vite + Material UI** para explorar una colección d
 
 ⚙️ Instalación y uso
 
-1. Clonar el repositorio:
+1. Clona el repositorio:
 
 ```bash 
 
@@ -37,7 +37,7 @@ git clone https://github.com/tuusuario/movie-explorer.git
 
    ```
 
-3. Ingresar a la carpeta del proyecto
+2. Ingresa a la carpeta del proyecto
 
  ```bash
 
@@ -45,7 +45,7 @@ git clone https://github.com/tuusuario/movie-explorer.git
 
 ```
 
-3. Instalar dependencias:
+3. Instala las dependencias:
 
 ```bash
 
@@ -53,7 +53,7 @@ npm install
 
 ```
 
-4. Iniciar el servidor de desarrollo:
+4. Ejecuta el proyecto:
 
 ```bash
 
@@ -61,7 +61,7 @@ npm run dev
 
 ```
 
-5. Abrir en el navegador:
+5. Abre en el navegador:
 
 http://localhost:5173
 
