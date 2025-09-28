@@ -28,10 +28,14 @@ Funcionalidades
 ⚙️ Instalación y uso
 
 1. Clonar el repositorio:
+   
    ```bash
+   
    git clone https://github.com/tuusuario/movie-explorer.git
 
-2. Ingresar a la carpeta del proyecto
+   ```
+
+3. Ingresar a la carpeta del proyecto
 
  ```bash
 
