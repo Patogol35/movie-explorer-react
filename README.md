@@ -28,10 +28,10 @@ Funcionalidades
 ⚙️ Instalación y uso
 
 1. Clonar el repositorio:
-   
-   ```bash
-   
-   git clone https://github.com/tuusuario/movie-explorer.git
+
+```bash 
+
+git clone https://github.com/tuusuario/movie-explorer.git
 
    ```
 
