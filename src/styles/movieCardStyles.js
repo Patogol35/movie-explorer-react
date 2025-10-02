@@ -4,7 +4,7 @@ export const styles = {
     color: "inherit",
   },
   card: {
-    width: 250,            // 🔥 ancho fijo para todas
+    width: 250,            // 🔥 mismo ancho para todas
     borderRadius: 4,
     overflow: "hidden",
     bgcolor: "background.paper",
@@ -17,11 +17,17 @@ export const styles = {
   },
   mediaBox: {
     position: "relative",
+    paddingTop: "150%",   // 🔥 proporción 2:3 (puedes poner 56.25% si quieres 16:9)
+    overflow: "hidden",
+    backgroundColor: "#000",
   },
   media: {
-    height: 300,
-    objectFit: "cover",
-    filter: "brightness(0.9)",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "contain", // 🔥 se muestra toda la imagen
   },
   ratingBox: {
     position: "absolute",
