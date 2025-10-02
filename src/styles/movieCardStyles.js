@@ -4,17 +4,17 @@ export const styles = {
     color: "inherit",
   },
   card: {
-    width: "100%",
-    maxWidth: 250,
-    height: 420, // 🔹 altura fija uniforme (ajústala según necesites)
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between", // reparte espacio entre media y contenido
+    width: "250px",     // 🔹 ancho fijo
+    minWidth: "250px",  // 🔹 evita que se encoja
+    maxWidth: "250px",  // 🔹 evita que se expanda
+    height: "420px",    // 🔹 alto fijo
     borderRadius: 3,
     overflow: "hidden",
     bgcolor: "background.paper",
     boxShadow: "0 8px 25px rgba(0,0,0,0.2)",
     transition: "transform 0.25s ease, box-shadow 0.25s ease",
+    display: "flex",
+    flexDirection: "column",
     "&:hover": {
       transform: "translateY(-6px) scale(1.04)",
       boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
@@ -25,7 +25,8 @@ export const styles = {
     flexShrink: 0,
   },
   media: {
-    height: 250, // 🔹 altura consistente de las imágenes
+    height: "250px", // 🔹 altura consistente para la imagen
+    width: "100%",
     objectFit: "cover",
     filter: "brightness(0.9)",
   },
@@ -46,7 +47,7 @@ export const styles = {
   },
   content: {
     p: 1.5,
-    flexGrow: 1, // 🔹 asegura que el contenido llene el espacio disponible
+    flexGrow: 1,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
