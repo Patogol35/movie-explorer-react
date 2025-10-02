@@ -4,17 +4,13 @@ export const styles = {
     color: "inherit",
   },
   card: {
-    width: "250px",     // ancho fijo
-    minWidth: "250px",
-    maxWidth: "250px",
-    height: "420px",    // alto fijo de la card
+    width: "100%",
+    maxWidth: 250,
     borderRadius: 3,
     overflow: "hidden",
     bgcolor: "background.paper",
     boxShadow: "0 8px 25px rgba(0,0,0,0.2)",
     transition: "transform 0.25s ease, box-shadow 0.25s ease",
-    display: "flex",
-    flexDirection: "column",
     "&:hover": {
       transform: "translateY(-6px) scale(1.04)",
       boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
@@ -22,21 +18,11 @@ export const styles = {
   },
   mediaBox: {
     position: "relative",
-    flexShrink: 0,
-    width: "100%",
-    height: "250px",       // altura fija del contenedor de la imagen
-    overflow: "hidden",
-    borderRadius: "3px 3px 0 0",
-    bgcolor: "#000",       // barras negras si la imagen no llena todo el espacio
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
   media: {
-    width: "100%",         // ocupa todo el ancho
-    height: "100%",        // ocupa toda la altura del contenedor
-    objectFit: "contain",  // 🔹 muestra la imagen completa
-    backgroundColor: "#000",
+    height: 300,
+    objectFit: "cover",
+    filter: "brightness(0.9)",
   },
   ratingBox: {
     position: "absolute",
@@ -55,10 +41,6 @@ export const styles = {
   },
   content: {
     p: 1.5,
-    flexGrow: 1,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
   },
   title: {
     fontWeight: 700,
