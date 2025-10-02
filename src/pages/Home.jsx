@@ -16,6 +16,7 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import MovieCard from "../components/MovieCard";
 import { getMovies, getAllGenres } from "../services/movies";
+import { styles } from "../styles/homeStyles"; // ⬅️ Importamos estilos
 
 export default function Home({ mode, toggleMode }) {
   const [movies, setMovies] = useState([]);
@@ -23,13 +24,11 @@ export default function Home({ mode, toggleMode }) {
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
 
-  // 🔹 Cargar datos al montar
   useEffect(() => {
     setMovies(getMovies());
     setGenres(getAllGenres());
   }, []);
 
-  // 🔹 Filtrado
   const filtered = useMemo(() => {
     return movies.filter((m) => {
       const matchesQuery = m.title.toLowerCase().includes(query.toLowerCase());
@@ -39,56 +38,33 @@ export default function Home({ mode, toggleMode }) {
   }, [movies, query, genre]);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={styles.root}>
       {/* 🔹 AppBar */}
-      <AppBar position="sticky" sx={{ bgcolor: "#141414" }}>
-        <Toolbar
-          sx={{
-            flexDirection: { xs: "column", sm: "row" },
-            alignItems: { xs: "flex-start", sm: "center" },
-            justifyContent: "space-between",
-            gap: 1,
-          }}
-        >
+      <AppBar position="sticky" sx={styles.appBar}>
+        <Toolbar sx={styles.toolbar}>
           {/* Título */}
           <Box>
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            <Typography variant="h6" sx={styles.title}>
               🎬 Movie Explorer
             </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{ fontWeight: 700, color: "#1e88e5" }}
-            >
+            <Typography variant="subtitle1" sx={styles.subtitle}>
               Autor: Jorge Patricio Santamaría Cherrez
             </Typography>
           </Box>
 
           {/* Buscador */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              bgcolor: "background.paper",
-              borderRadius: 2,
-              px: 1,
-              flex: 1,
-              maxWidth: 400,
-            }}
-          >
+          <Box sx={styles.searchBox}>
             <SearchIcon sx={{ color: "text.secondary", mr: 1 }} />
             <InputBase
               placeholder="Buscar película…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              sx={{ flex: 1 }}
+              sx={styles.searchInput}
             />
           </Box>
 
           {/* Selector de género */}
-          <FormControl
-            size="small"
-            sx={{ minWidth: 150, bgcolor: "background.paper", borderRadius: 2 }}
-          >
+          <FormControl size="small" sx={styles.genreSelect}>
             <Select
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
@@ -115,11 +91,9 @@ export default function Home({ mode, toggleMode }) {
       {/* Contenido principal */}
       <Box p={3}>
         {filtered.length === 0 ? (
-          <Box sx={{ textAlign: "center", mt: 5, color: "#1e88e5", fontWeight: 600 }}>
-            No se encontraron resultados.
-          </Box>
+          <Box sx={styles.noResults}>No se encontraron resultados.</Box>
         ) : (
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 2, pb: 4 }}>
+          <Grid container spacing={3} justifyContent="center" sx={styles.movieGrid}>
             {filtered.map((movie) => (
               <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={movie.id}>
                 <MovieCard movie={movie} />
