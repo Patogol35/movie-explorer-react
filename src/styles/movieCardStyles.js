@@ -5,9 +5,9 @@ export const styles = {
   },
   card: {
     width: "250px",     // ancho fijo
-    minWidth: "250px",  // evita que se encoja
-    maxWidth: "250px",  // evita que se expanda
-    height: "420px",    // alto fijo
+    minWidth: "250px",
+    maxWidth: "250px",
+    height: "420px",    // alto fijo de la card
     borderRadius: 3,
     overflow: "hidden",
     bgcolor: "background.paper",
@@ -23,16 +23,20 @@ export const styles = {
   mediaBox: {
     position: "relative",
     flexShrink: 0,
+    width: "100%",
+    height: "250px",       // altura fija del contenedor de la imagen
+    overflow: "hidden",
+    borderRadius: "3px 3px 0 0",
+    bgcolor: "#000",       // barras negras si la imagen no llena todo el espacio
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    bgcolor: "#000", // fondo negro para que no se vean espacios
   },
   media: {
-    height: "250px",        // altura fija de la imagen
-    width: "100%",          // ocupa todo el ancho del card
-    objectFit: "contain",   // 🔹 muestra toda la imagen completa
-    filter: "brightness(0.95)",
+    width: "100%",         // ocupa todo el ancho
+    height: "100%",        // ocupa toda la altura del contenedor
+    objectFit: "contain",  // 🔹 muestra la imagen completa
+    backgroundColor: "#000",
   },
   ratingBox: {
     position: "absolute",
