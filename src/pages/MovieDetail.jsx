@@ -1,4 +1,4 @@
-Separa los diseños mío de mi moviedetail bro import React, { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getById } from '../services/movies'
 import { Container, Button, Typography, Box, Chip, Rating } from '@mui/material'
