@@ -6,12 +6,12 @@ export const styles = {
   card: {
     width: "100%",
     maxWidth: 260,
-    minHeight: 420,          // 🔥 asegura altura mínima uniforme
-    display: "flex",         // 🔥 usa flexbox
-    flexDirection: "column", // 🔥 organiza contenido en columna
+    height: 420,            // 🔥 altura fija
+    display: "flex",
+    flexDirection: "column",
     borderRadius: 5,
     overflow: "hidden",
-    bgcolor: "rgba(255,255,255,0.1)", // efecto glass
+    bgcolor: "rgba(255,255,255,0.1)",
     backdropFilter: "blur(12px)",
     border: "1px solid rgba(255,255,255,0.2)",
     boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
@@ -26,7 +26,7 @@ export const styles = {
     overflow: "hidden",
   },
   media: {
-    height: 300,
+    height: 220, // 🔥 menos alto para que deje espacio al contenido
     objectFit: "cover",
     transition: "transform 0.5s ease, filter 0.5s ease",
     filter: "brightness(0.95) contrast(1.05)",
@@ -37,46 +37,41 @@ export const styles = {
   },
   ratingBox: {
     position: "absolute",
-    bottom: 12,
-    right: 12,
+    bottom: 8,
+    right: 8,
     bgcolor: "rgba(0,0,0,0.55)",
     backdropFilter: "blur(6px)",
-    px: 1.4,
-    py: 0.5,
+    px: 1.2,
+    py: 0.4,
     borderRadius: 3,
     display: "flex",
     alignItems: "center",
     gap: 0.5,
     color: "#FFD700",
     fontWeight: 700,
-    fontSize: "0.9rem",
-    animation: "fadeIn 0.6s ease",
+    fontSize: "0.85rem",
   },
   content: {
     p: 2,
-    flexGrow: 1, // 🔥 se estira para rellenar el espacio
+    flexGrow: 1,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
   },
   title: {
     fontWeight: 800,
-    fontSize: "1.05rem",
+    fontSize: "1rem",
     letterSpacing: "0.4px",
     display: "-webkit-box",
     WebkitLineClamp: 2,
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
-    lineHeight: 1.5,
+    lineHeight: 1.4,
   },
   genresBox: {
     display: "flex",
     flexWrap: "wrap",
-    gap: 0.6,
-    mt: 1.3,
-  },
-  "@keyframes fadeIn": {
-    from: { opacity: 0, transform: "scale(0.9)" },
-    to: { opacity: 1, transform: "scale(1)" },
+    gap: 0.5,
+    mt: 1,
   },
 };
