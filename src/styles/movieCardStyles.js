@@ -6,6 +6,9 @@ export const styles = {
   card: {
     width: "100%",
     maxWidth: 260,
+    minHeight: 420,          // 🔥 asegura altura mínima uniforme
+    display: "flex",         // 🔥 usa flexbox
+    flexDirection: "column", // 🔥 organiza contenido en columna
     borderRadius: 5,
     overflow: "hidden",
     bgcolor: "rgba(255,255,255,0.1)", // efecto glass
@@ -13,7 +16,6 @@ export const styles = {
     border: "1px solid rgba(255,255,255,0.2)",
     boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
     transition: "transform 0.4s ease, box-shadow 0.4s ease",
-    transformStyle: "preserve-3d",
     "&:hover": {
       transform: "translateY(-8px) rotate3d(1,1,0,6deg) scale(1.05)",
       boxShadow: "0 20px 40px rgba(0,0,0,0.35)",
@@ -52,6 +54,10 @@ export const styles = {
   },
   content: {
     p: 2,
+    flexGrow: 1, // 🔥 se estira para rellenar el espacio
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   title: {
     fontWeight: 800,
