@@ -6,6 +6,10 @@ export const styles = {
   card: {
     width: "100%",
     maxWidth: 250,
+    height: 420, // 🔹 altura fija uniforme (ajústala según necesites)
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between", // reparte espacio entre media y contenido
     borderRadius: 3,
     overflow: "hidden",
     bgcolor: "background.paper",
@@ -18,9 +22,10 @@ export const styles = {
   },
   mediaBox: {
     position: "relative",
+    flexShrink: 0,
   },
   media: {
-    height: 300,
+    height: 250, // 🔹 altura consistente de las imágenes
     objectFit: "cover",
     filter: "brightness(0.9)",
   },
@@ -41,6 +46,10 @@ export const styles = {
   },
   content: {
     p: 1.5,
+    flexGrow: 1, // 🔹 asegura que el contenido llene el espacio disponible
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   title: {
     fontWeight: 700,
